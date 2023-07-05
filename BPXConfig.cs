@@ -73,10 +73,10 @@ namespace BlueprintsX
         private static string defaultSList = "0.05;0.5;1;2;10;20;50";
 
         //Default indices
-        private static int gridXZListIndex = 6;
-        private static int gridYListIndex = 5;
-        private static int gridRListIndex = 5;
-        private static int gridSListIndex = 5;
+        public static int gridXZListIndex = 6;
+        public static int gridYListIndex = 5;
+        public static int gridRListIndex = 5;
+        public static int gridSListIndex = 5;
 
         //Titles
         public static string preferencesTitle = "1. Preferences";
@@ -132,9 +132,7 @@ namespace BlueprintsX
         public static string values_R = CreateConfigLabel(5, "R Values");
         public static string values_R_default_index = CreateConfigLabel(6, "Default R Index");
         public static string values_S = CreateConfigLabel(7, "S Values");
-        public static string values_S_default_index = CreateConfigLabel(8, "Default S Index");
-
-        
+        public static string values_S_default_index = CreateConfigLabel(8, "Default S Index");        
 
         public static void InitializeConfig(ConfigFile cfg)
         {
@@ -193,6 +191,11 @@ namespace BlueprintsX
             ConfigEntry<int> cfg_valuesSIndex = config.Bind(valuesTitle, values_S_default_index, gridSListIndex, "");
             
             cfg.SettingChanged += Cfg_SettingChanged;
+            ForceReload();
+        }
+
+        public static void ForceReload()
+        {
             Cfg_SettingChanged(null, null);
         }
 
@@ -257,9 +260,9 @@ namespace BlueprintsX
                 gridSList = ParseValueList(values_S, defaultSList);
 
                 gridXZListIndex = ParseValueListIndex(gridXZList, values_XZ_default_index);
-                gridYListIndex = ParseValueListIndex(gridXZList, values_Y_default_index);
-                gridRListIndex = ParseValueListIndex(gridXZList, values_R_default_index);
-                gridSListIndex = ParseValueListIndex(gridXZList, values_S_default_index);
+                gridYListIndex = ParseValueListIndex(gridYList, values_Y_default_index);
+                gridRListIndex = ParseValueListIndex(gridRList, values_R_default_index);
+                gridSListIndex = ParseValueListIndex(gridSList, values_S_default_index);
 
                 ApplyGridLists();
             }
@@ -316,12 +319,15 @@ namespace BlueprintsX
                 //Set the value of the XZ gizmo
                 BPXManager.central.gizmos.list_gridXZ = gridXZList;
                 BPXManager.central.gizmos.startiXZ = gridXZListIndex;
+                BPXManager.central.gizmos.index_gridXZ = gridXZListIndex;
                 //Set the value of the Y gizmo
                 BPXManager.central.gizmos.list_gridY = gridYList;
                 BPXManager.central.gizmos.startiY = gridYListIndex;
+                BPXManager.central.gizmos.index_gridY = gridYListIndex;
                 //Set the value of the R gizmo
                 BPXManager.central.gizmos.list_gridR = gridRList;
                 BPXManager.central.gizmos.startiR = gridRListIndex;
+                BPXManager.central.gizmos.index_gridR = gridRListIndex;
 
                 //Redraw
                 BPXManager.central.gizmos.RedrawGridButtons();

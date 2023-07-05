@@ -48,7 +48,7 @@ namespace BlueprintsX
             blueprintHomeDirectory = AppDomain.CurrentDomain.BaseDirectory + @"\BepInEx\plugins";
 
             BPXUI.Initialize();
-            BPXConfig.ApplyGridLists();
+            BPXConfig.ForceReload();
 
             BPXRenderer.OnRenderComplete += BPXRenderer_OnRenderComplete;
         }

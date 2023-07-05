@@ -467,7 +467,7 @@ namespace BlueprintsX
             {
                 XZ = BPXManager.central.gizmos.list_gridXZ[BPXManager.central.gizmos.index_gridXZ],
                 Y = BPXManager.central.gizmos.list_gridY[BPXManager.central.gizmos.index_gridY],
-                R = BPXManager.central.gizmos.list_gridXZ[BPXManager.central.gizmos.index_gridR],
+                R = BPXManager.central.gizmos.list_gridR[BPXManager.central.gizmos.index_gridR],
                 S = gizmoScaleValues[currentGizmoScaleValueIndex]
             };
         }
@@ -522,6 +522,7 @@ namespace BlueprintsX
                 else
                 {
                     previewContainer.transform.GetChild(0).GetComponent<Image>().sprite = BlueprintXPlugin.blackPixelSprite;
+                    fileName.text = "";
                 }
 
                 zeepfileTypeText.text = "Import Blueprint";
@@ -748,21 +749,39 @@ namespace BlueprintsX
         {
             if (BPXManager.selectedBlueprintDuringLoading != null)
             {
-                string path = BPXManager.selectedBlueprintDuringLoading.path;
-                Blueprint blueprintFromSelectedFile = BPXIO.ReadBlueprintFromFile(path);
-                blueprintFromSelectedFile.path = path;
+                try
+                {
+                    string path = BPXManager.selectedBlueprintDuringLoading.path;
+                    Blueprint blueprintFromSelectedFile = BPXIO.ReadBlueprintFromFile(path);
+                    blueprintFromSelectedFile.path = path;
 
-                //Save a reference to the loaded blueprint.
-                BPXManager.selectedBlueprintDuringLoading = blueprintFromSelectedFile;
+                    //Save a reference to the loaded blueprint.
+                    BPXManager.selectedBlueprintDuringLoading = blueprintFromSelectedFile;
 
-                //Set the info text to the creator of the blueprint.
-                //infoText.text = "by " + blueprintFromSelectedFile.creator;
+                    //Set the info text to the creator of the blueprint.
+                    //infoText.text = "by " + blueprintFromSelectedFile.creator;
 
-                //Set the file name input field to the selected file
-                fileName.text = blueprintFromSelectedFile.title;
+                    //Set the file name input field to the selected file
+                    fileName.text = blueprintFromSelectedFile.title;
 
-                //Generate a new thumbnail for this blueprint.
-                BPXRenderer.GenerateThumbnail(blueprintFromSelectedFile, new BPXRenderParameters(new Vector2Int(512, 512), renderTag: "Load", imageCount: 4));
+                    //Generate a new thumbnail for this blueprint.
+                    BPXRenderer.GenerateThumbnail(blueprintFromSelectedFile, new BPXRenderParameters(new Vector2Int(512, 512), renderTag: "Load", imageCount: 4));
+                }
+                catch
+                {
+                    BPXManager.selectedBlueprintDuringLoading = null;
+                    previewContainer.transform.GetChild(0).GetComponent<Image>().sprite = BlueprintXPlugin.blackPixelSprite;
+                    fileName.text = "";
+                    
+                    if (savePanelInBlueprintMode)
+                    {
+                        blueprintDirectory = new DirectoryInfo(BPXManager.blueprintHomeDirectory);
+                    }
+                    else
+                    {
+                        levelDirectory = new DirectoryInfo(BPXManager.levelHomeDirectory);
+                    }
+                }
             }
         }
 
@@ -830,7 +849,7 @@ namespace BlueprintsX
                 List<DirectoryInfo> directories = new List<DirectoryInfo>();
                 Dictionary<string, string> directoriesToRename = new Dictionary<string, string>();
 
-                if (searchBar.text == "")
+                if (searchBar.text == "" || savePanelInSaveMode)
                 {
                     files = dir.GetFiles("*.zeeplevel");
                     allDirectories = dir.GetDirectories();
@@ -856,7 +875,12 @@ namespace BlueprintsX
                                 string fileExtension = fileInfo.Extension.ToLower();
                                 switch (fileExtension)
                                 {
+                                    case ".png":
+                                    case ".obj":
                                     case ".jpg":
+                                    case ".realm":
+                                    case ".zeeplist":
+                                    case ".zip":
                                         break;
                                     case ".zeeplevel":
                                         if (zeeplevelCount == 0)
