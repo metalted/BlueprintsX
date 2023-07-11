@@ -29,6 +29,37 @@ namespace BlueprintsX
             //Get the state of the enable key.
             bool enableKey = Input.GetKey(BPXConfig.enableKey);
 
+            #region SaveLoad
+            //If save shortcut is enabled.
+            if(BPXConfig.saveShortcut)
+            {
+                //If enable key is pressed (mandatory for saving).
+                if(enableKey)
+                {
+                    //If the save button is pressed.
+                    if(Input.GetKeyDown(BPXConfig.saveShortcutKey))
+                    {
+                        //Click the blueprint save button in the toolbar.
+                        BPXUI.OnBlueprintSaveButton();
+                    }
+                }
+            }
+            //If load shortcut is enabled.
+            if(BPXConfig.loadShortcut)
+            {
+                //If enable key is pressed (mandatory for loading).
+                if (enableKey)
+                {
+                    //If the load button is pressed.
+                    if (Input.GetKeyDown(BPXConfig.loadShortcutKey))
+                    {
+                        //Click the blueprint load button in the toolbar.
+                        BPXUI.OnBlueprintLoadButton();
+                    }
+                }
+            }
+            #endregion
+
             #region Scaling
             //Scrollwheel scaling.
             if (BPXConfig.scrollScaling)

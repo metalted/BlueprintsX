@@ -384,7 +384,9 @@ namespace BlueprintsX
         {
             if(BPXManager.central.selection.list.Count > 0)
             {
-                BPXManager.createdBlueprintFromEditor = BPXIO.CreateBlueprintFromSelection(BPXManager.central.selection.list, PlayerManager.Instance.steamAchiever.GetPlayerName());
+                BPXManager.createdBlueprintFromEditor = BPXIO.CreateBlueprintFromSelection(BPXManager.central.selection.list, PlayerManager.Instance.steamAchiever.GetPlayerName(true));
+                //BPXManager.createdBlueprintFromEditor = BPXIO.CreateBlueprintFromSelection(BPXManager.central.selection.list, "Bouwerman");
+
                 savePanelInBlueprintMode = true;
 
                 RefreshSavePanel();

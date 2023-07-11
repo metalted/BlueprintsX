@@ -36,6 +36,8 @@ namespace BlueprintsX
         public static bool enableForClipboard = false;
         public static bool fastTravel = true;
         public static bool enableForFastTravel = false;
+        public static bool saveShortcut = false;
+        public static bool loadShortcut = false;
 
         //Keys
         public static KeyCode enableKey = KeyCode.LeftControl;
@@ -56,9 +58,12 @@ namespace BlueprintsX
         public static KeyCode cycleAxisKey = KeyCode.Space;
         
         public static KeyCode copyKey = KeyCode.K;
-        public static KeyCode pasteKey = KeyCode.L;
+        public static KeyCode pasteKey = KeyCode.J;
 
         public static KeyCode fastTravelKey = KeyCode.U;
+
+        public static KeyCode saveShortcutKey = KeyCode.S;
+        public static KeyCode loadShortcutKey = KeyCode.L;
 
         //Values
         public static List<float> gridXZList = new List<float>();
@@ -108,6 +113,8 @@ namespace BlueprintsX
         public static string control_enableForClipboard = CreateConfigLabel(14, "Enable For Clipboard");
         public static string control_fastTravel = CreateConfigLabel(15, "Fast Travel");
         public static string control_enableForFastTravel = CreateConfigLabel(16, "Enable For Fast Travel");
+        public static string control_saveShortcut = CreateConfigLabel(17, "Save Shortcut");
+        public static string control_loadShortcut = CreateConfigLabel(18, "Load Shortcut");
 
         public static string keys_enable = CreateConfigLabel(1, "Enable");
         public static string keys_modifier = CreateConfigLabel(2, "Modifier");
@@ -124,6 +131,8 @@ namespace BlueprintsX
         public static string keys_cycleAxis = CreateConfigLabel(13, "Cycle Axis");
         public static string keys_cycleScaleGizmo = CreateConfigLabel(14, "Cycle Scale Gizmo");
         public static string keys_fastTravel = CreateConfigLabel(15, "Fast Travel");
+        public static string keys_save = CreateConfigLabel(16, "Save Shortcut: Enable + ");
+        public static string keys_load = CreateConfigLabel(17, "Load Shortcut: Enable + ");
 
         public static string values_XZ = CreateConfigLabel(1, "XZ Values");
         public static string values_XZ_default_index = CreateConfigLabel(2, "Default XZ Index");
@@ -160,6 +169,8 @@ namespace BlueprintsX
             ConfigEntry<bool> cfg_enableForClipboard = config.Bind(controlSettingsTitle, control_enableForClipboard, enableForClipboard, "");
             ConfigEntry<bool> cfg_fastTravel = config.Bind(controlSettingsTitle, control_fastTravel, fastTravel, "");
             ConfigEntry<bool> cfg_enableForFastTravel = config.Bind(controlSettingsTitle, control_enableForFastTravel, enableForFastTravel, "");
+            ConfigEntry<bool> cfg_saveShortcut = config.Bind(controlSettingsTitle, control_saveShortcut, saveShortcut, "");
+            ConfigEntry<bool> cfg_loadShortcut = config.Bind(controlSettingsTitle, control_loadShortcut, loadShortcut, "");
 
             //Keys
             ConfigEntry<KeyCode> cfg_enable = config.Bind(keysTitle, keys_enable, enableKey, "");
@@ -177,6 +188,8 @@ namespace BlueprintsX
             ConfigEntry<KeyCode> cfg_cycleAxis = config.Bind(keysTitle, keys_cycleAxis, cycleAxisKey, "");
             ConfigEntry<KeyCode> cfg_cycleScaleGizmo = config.Bind(keysTitle, keys_cycleScaleGizmo, cycleScaleKey, "");
             ConfigEntry<KeyCode> cfg_fastTravelKey = config.Bind(keysTitle, keys_fastTravel, fastTravelKey, "");
+            ConfigEntry<KeyCode> cfg_saveShortcutKey = config.Bind(keysTitle, keys_save, saveShortcutKey, "");
+            ConfigEntry<KeyCode> cfg_loadShortcutKey = config.Bind(keysTitle, keys_load, loadShortcutKey, "");
 
             //Values
             ConfigEntry<string> cfg_valuesXZ = config.Bind(valuesTitle, values_XZ, defaultXZList, "");
@@ -225,6 +238,8 @@ namespace BlueprintsX
                 enableForClipboard = (bool)config[controlSettingsTitle, control_enableForClipboard].BoxedValue;
                 fastTravel = (bool)config[controlSettingsTitle, control_fastTravel].BoxedValue;
                 enableForFastTravel = (bool)config[controlSettingsTitle, control_enableForFastTravel].BoxedValue;
+                saveShortcut = (bool)config[controlSettingsTitle, control_saveShortcut].BoxedValue;
+                loadShortcut = (bool)config[controlSettingsTitle, control_loadShortcut].BoxedValue;
 
                 //Keys
                 enableKey = (KeyCode)config[keysTitle, keys_enable].BoxedValue;
@@ -242,6 +257,8 @@ namespace BlueprintsX
                 cycleAxisKey = (KeyCode)config[keysTitle, keys_cycleAxis].BoxedValue;
                 cycleScaleKey = (KeyCode)config[keysTitle, keys_cycleScaleGizmo].BoxedValue;
                 fastTravelKey = (KeyCode)config[keysTitle, keys_fastTravel].BoxedValue;
+                saveShortcutKey = (KeyCode)config[keysTitle, keys_save].BoxedValue;
+                loadShortcutKey = (KeyCode)config[keysTitle, keys_load].BoxedValue;
 
                 if(includePlanesInCycle)
                 {
