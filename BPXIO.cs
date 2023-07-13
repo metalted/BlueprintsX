@@ -111,6 +111,25 @@ namespace BlueprintsX
             return blueprint;
         }
 
+        public static Blueprint RegenerateBlueprint(Blueprint blueprint)
+        {
+            Blueprint bp = new Blueprint();
+
+            foreach (BlockPropertyJSON bpj in blueprint.blocks)
+            {
+                BlockPropertyJSON regenBPJ = new BlockPropertyJSON();
+                regenBPJ.position = new Vector3(bpj.position.x, bpj.position.y, bpj.position.z);
+                regenBPJ.eulerAngles = new Vector3(bpj.eulerAngles.x, bpj.eulerAngles.y, bpj.eulerAngles.z);
+                regenBPJ.localScale = new Vector3(bpj.localScale.x, bpj.localScale.y, bpj.localScale.z);
+                regenBPJ.blockID = bpj.blockID;
+                regenBPJ.properties = new List<float>(bpj.properties);
+
+                bp.blocks.Add(regenBPJ);
+            }
+
+            return bp;
+        }
+
         public static Blueprint CreateBlueprintFromSelection(List<BlockProperties> blockProperties, string creator = "", string title = "")
         {
             if (blockProperties.Count == 0)
