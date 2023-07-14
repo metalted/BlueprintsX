@@ -111,6 +111,7 @@ namespace BlueprintsX
             return blueprint;
         }
 
+        /*
         public static Blueprint RegenerateBlueprint(Blueprint blueprint)
         {
             Blueprint bp = new Blueprint();
@@ -129,7 +130,44 @@ namespace BlueprintsX
 
             return bp;
         }
+        */
 
+        public static Blueprint CreateBlueprintFromSelection(List<BlockProperties> blockProperties, string creator = "", string title = "")
+        {
+            if (blockProperties.Count == 0)
+            {
+                Debug.Log("No blocks in selection");
+                return null;
+            }
+
+            Blueprint blueprint = new Blueprint();
+            if (creator != "")
+            {
+                blueprint.creator = creator;
+            }
+
+            if (title != "")
+            {
+                blueprint.title = title;
+            }
+
+            for (int i = 0; i < blockProperties.Count; i++)
+            {
+                try
+                {
+                    BlockPropertyJSON block = BPXUtilities.BPXConvertBlockToJSON_v15(blockProperties[i]);
+                    blueprint.blocks.Add(block);
+                }
+                catch
+                {
+                    Debug.Log("Error in block");
+                }
+            }
+
+            return blueprint;
+        }
+
+        /*
         public static Blueprint CreateBlueprintFromSelection(List<BlockProperties> blockProperties, string creator = "", string title = "")
         {
             if (blockProperties.Count == 0)
@@ -163,7 +201,7 @@ namespace BlueprintsX
             }
 
             return blueprint;
-        }
+        }*/
 
         public static void SaveBlueprintAtTargetedPath()
         {
@@ -253,6 +291,76 @@ namespace BlueprintsX
 
             for (int i = 0; i < blueprint.blocks.Count; i++)
             {
+                int id = blueprint.blocks[i].blockID;
+
+                //Check if valid block.
+                if (id < 0 || id >= PlayerManager.Instance.loader.globalBlockList.blocks.Count)
+                {
+                    Debug.LogError("Invalid block ID during blueprint instantiation: " + id);
+                    continue;
+                }
+
+                //Generate a new UID.
+                string newUID = PlayerManager.Instance.GenerateUniqueIDforBlocks(id.ToString());
+
+                //Create a deep copy of the BlockPropertyJSON
+                BlockPropertyJSON copy = BPXUtilities.DeepCopyBlockPropertyJSON(blueprint.blocks[i]);
+
+                //Instantiate the blockproperties.
+                BlockProperties bp = BPXManager.central.undoRedo.GenerateNewBlock(copy, newUID);
+
+                //Add the new block to the list of blocks.
+                blockList.Add(bp);
+
+                //Add a json representation to the after blocks list.
+                after.Add(bp.ConvertBlockToJSON_v15_string());
+            }
+
+            if (notifyUndo)
+            {
+                //Create a new selection list using the UIDs of the blocks.
+                afterSelection = BPXManager.central.undoRedo.ConvertSelectionToStringList(blockList);
+
+                //Convert all the before and after data into a Change_Collection.
+                Change_Collection collection = BPXManager.central.undoRedo.ConvertBeforeAndAfterListToCollection(
+                    before, after,
+                    blockList,
+                    beforeSelection, afterSelection);
+
+                //Register the creation
+                BPXManager.central.validation.BreakLock(collection, "Gizmo6");
+
+                //Select all the created objects.
+                BPXManager.central.selection.UndoRedoReselection(blockList);
+            }
+
+            return blockList;
+        }
+
+        /*
+        public static List<BlockProperties> InstantiateBlueprintIntoEditor(Blueprint blueprint, bool notifyUndo)
+        {
+            //Deselect all blocks first.
+            if (notifyUndo)
+            {
+                BPXManager.central.selection.DeselectAllBlocks(true, nameof(BPXManager.central.selection.ClickNothing));
+            }
+
+            //Create a list of blocks before the creation. //Same count, but null.
+            List<string> before = Enumerable.Repeat((string)null, blueprint.blocks.Count).ToList();
+            //Create a list of selections before the creation, which is empty.
+            List<string> beforeSelection = new List<string>();
+
+            //Stores the JSON strings of the blocks after creation.
+            List<string> after = new List<string>();
+            //Stores the selection after creation.
+            List<string> afterSelection = new List<string>();
+
+            //Stores the BlockProperties objects of the created blocks.
+            List<BlockProperties> blockList = new List<BlockProperties>();            
+
+            for (int i = 0; i < blueprint.blocks.Count; i++)
+            {
                 BlockProperties blockProperties;
                 int id = blueprint.blocks[i].blockID;
 
@@ -304,6 +412,6 @@ namespace BlueprintsX
             }
 
             return blockList;
-        }
+        }*/
     }
 }

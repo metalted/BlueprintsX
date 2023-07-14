@@ -704,11 +704,11 @@ namespace BlueprintsX
             }
             else
             {
-                Blueprint regen = BPXIO.RegenerateBlueprint(BPXManager.copyBuffer);
+                //Blueprint regen = BPXIO.RegenerateBlueprint(BPXManager.copyBuffer);
 
                 // Load the blueprint from the copy buffer into the editor
-                //BPXIO.LoadBlueprintIntoEditor(BPXManager.copyBuffer, true);
-                BPXIO.LoadBlueprintIntoEditor(regen, true);
+                BPXIO.LoadBlueprintIntoEditor(BPXManager.copyBuffer, true);
+                //BPXIO.LoadBlueprintIntoEditor(regen, true);
             }
         }        
         #endregion

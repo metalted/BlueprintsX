@@ -118,6 +118,28 @@ namespace BlueprintsX
             return new Vector3[] { GetAbsoluteVector(chosenXDirection), GetAbsoluteVector(chosenYDirection), GetAbsoluteVector(chosenZDirection) };
         }
 
+        public static BlockPropertyJSON BPXConvertBlockToJSON_v15(BlockProperties bp)
+        {
+            BlockPropertyJSON blockPropertyJSON = new BlockPropertyJSON();
+            blockPropertyJSON.position = bp.transform.position;
+            blockPropertyJSON.eulerAngles = bp.transform.eulerAngles;
+            blockPropertyJSON.localScale = bp.transform.localScale;
+            blockPropertyJSON.properties = new List<float>(bp.properties);
+            blockPropertyJSON.blockID = bp.blockID;
+            return blockPropertyJSON;
+        }
+
+        public static BlockPropertyJSON DeepCopyBlockPropertyJSON(BlockPropertyJSON bpj)
+        {
+            BlockPropertyJSON blockPropertyJSON = new BlockPropertyJSON();
+            blockPropertyJSON.position = bpj.position;
+            blockPropertyJSON.eulerAngles = bpj.eulerAngles;
+            blockPropertyJSON.localScale = bpj.localScale;
+            blockPropertyJSON.properties = new List<float>(bpj.properties);
+            blockPropertyJSON.blockID = bpj.blockID;
+            return blockPropertyJSON;
+        }
+
         public static string GetAxisFromDirection(Vector3 direction)
         {
             // Get the absolute values of the direction components
