@@ -313,6 +313,7 @@ namespace BlueprintsX
                     pos += center;
                     bp.transform.position = pos;
                     bp.transform.localScale *= amount;
+                    bp.SomethingChanged();
                 }
             }
             else
@@ -351,6 +352,7 @@ namespace BlueprintsX
                         // Calculate the scale addition for the block
                         Vector3 scaleAddition = Vector3.Scale((bp.transform.localScale * amount - bp.transform.localScale), scaledAxis);
                         bp.transform.localScale += scaleAddition;
+                        bp.SomethingChanged();
                     }
                 }
 
@@ -388,6 +390,7 @@ namespace BlueprintsX
                         // Calculate the scale addition for the block
                         Vector3 scaleAddition = Vector3.Scale((bp.transform.localScale * amount - bp.transform.localScale), scaledAxis);
                         bp.transform.localScale += scaleAddition;
+                        bp.SomethingChanged();
                     }
                 }
 
@@ -425,6 +428,7 @@ namespace BlueprintsX
                         // Calculate the scale addition for the block
                         Vector3 scaleAddition = Vector3.Scale((bp.transform.localScale * amount - bp.transform.localScale), scaledAxis);
                         bp.transform.localScale += scaleAddition;
+                        bp.SomethingChanged();
                     }
                 }
             }
@@ -452,6 +456,7 @@ namespace BlueprintsX
                 {
                     // Scale the block uniformly
                     bp.transform.localScale *= amount;
+                    bp.SomethingChanged();
                 }
             }
             else
@@ -483,6 +488,7 @@ namespace BlueprintsX
                         // Calculate the scale addition for the block
                         Vector3 scaleAddition = Vector3.Scale((bp.transform.localScale * amount - bp.transform.localScale), scaledAxis);
                         bp.transform.localScale += scaleAddition;
+                        bp.SomethingChanged();
                     }
                 }
 
@@ -513,6 +519,7 @@ namespace BlueprintsX
                         // Calculate the scale addition for the block
                         Vector3 scaleAddition = Vector3.Scale((bp.transform.localScale * amount - bp.transform.localScale), scaledAxis);
                         bp.transform.localScale += scaleAddition;
+                        bp.SomethingChanged();
                     }
                 }
 
@@ -543,6 +550,7 @@ namespace BlueprintsX
                         // Calculate the scale addition for the block
                         Vector3 scaleAddition = Vector3.Scale((bp.transform.localScale * amount - bp.transform.localScale), scaledAxis);
                         bp.transform.localScale += scaleAddition;
+                        bp.SomethingChanged();
                     }
                 }
             }
@@ -588,6 +596,7 @@ namespace BlueprintsX
             foreach (BlockProperties bp in blockList)
             {
                 bp.transform.position += move;
+                bp.SomethingChanged();
             }
 
             // Move the mother gizmo by the specified amount
@@ -655,6 +664,7 @@ namespace BlueprintsX
             {
                 // Remove the temporary parent by setting each block's parent to null
                 bp.transform.parent = null;
+                bp.SomethingChanged();
             }
 
             // Destroy the temporary parent object
