@@ -875,7 +875,20 @@ namespace BlueprintsX
                             foreach (FileInfo fileInfo in currentDirectoryFiles)
                             {
                                 string fileExtension = fileInfo.Extension.ToLower();
-                                switch (fileExtension)
+                                if(fileExtension == ".zeeplevel")
+                                {
+                                    if (zeeplevelCount == 0)
+                                    {
+                                        firstZeeplevelName = Path.GetFileNameWithoutExtension(fileInfo.FullName);
+                                    }
+                                    zeeplevelCount++;
+                                }
+                                else if(!BPXConfig.allowedExtensions.Contains(fileExtension))
+                                {
+                                    addThisDirectory = false;
+                                }
+                                
+                                /*switch (fileExtension)
                                 {
                                     case ".png":
                                     case ".obj":
@@ -894,7 +907,7 @@ namespace BlueprintsX
                                     default:
                                         addThisDirectory = false;
                                         break;
-                                }
+                                }*/
                             }
                         }
 

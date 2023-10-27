@@ -18,6 +18,8 @@ namespace BlueprintsX
         public static bool includePlanesInCycle = false;
         public static bool doubleLoadButtons = false;
         public static bool clearSearchOnClose = false;
+        public static List<string> allowedExtensions = new List<string>();
+        public static string defaultAllowedExtensions = ".png,.obj,.jpg,.realm,.zeeplist,.zip,.customsoapbox";
 
         //Controls
         public static bool scrollScaling = true;
@@ -95,7 +97,8 @@ namespace BlueprintsX
         public static string preferences_invertScrollwheel = CreateConfigLabel(1, "Invert Scrollwheel");
         public static string preferences_includePlanesInCycle = CreateConfigLabel(2, "Include Planes");
         public static string preferences_doubleLoadButtons = CreateConfigLabel(3, "Double Load Button");
-        public static string preferences_clearSearchOnClose = CreateConfigLabel(4, "Clear Search On Close");
+        public static string preferences_allowedExtensions = CreateConfigLabel(4, "Allowed Extensions");
+        //public static string preferences_clearSearchOnClose = CreateConfigLabel(4, "Clear Search On Close");
 
         public static string control_scrollScaling = CreateConfigLabel(1, "Scroll Scaling");
         public static string control_enableForScrollScaling = CreateConfigLabel(2, "Enable For Scroll Scaling");
@@ -151,6 +154,7 @@ namespace BlueprintsX
             ConfigEntry<bool> cfg_invertScrollWheel = config.Bind(preferencesTitle, preferences_invertScrollwheel, invertScrollWheel, "");
             ConfigEntry<bool> cfg_includePlanesInCycle = config.Bind(preferencesTitle, preferences_includePlanesInCycle, includePlanesInCycle, "");
             ConfigEntry<bool> cfg_doubleLoadButtons = config.Bind(preferencesTitle, preferences_doubleLoadButtons, doubleLoadButtons, "");
+            ConfigEntry<string> cfg_allowedExtensions = config.Bind(preferencesTitle, preferences_allowedExtensions, defaultAllowedExtensions, "");
 
             //Control Settings
             ConfigEntry<bool> cfg_scrollScaling = config.Bind(controlSettingsTitle, control_scrollScaling, scrollScaling, "");
@@ -220,6 +224,7 @@ namespace BlueprintsX
                 invertScrollWheel = (bool)config[preferencesTitle, preferences_invertScrollwheel].BoxedValue;
                 includePlanesInCycle = (bool)config[preferencesTitle, preferences_includePlanesInCycle].BoxedValue;
                 doubleLoadButtons = (bool)config[preferencesTitle, preferences_doubleLoadButtons].BoxedValue;
+                allowedExtensions = ((string)config[preferencesTitle, preferences_allowedExtensions].BoxedValue).Replace(" ", "").Split(",").ToList();
 
                 //Controls
                 scrollScaling = (bool)config[controlSettingsTitle, control_scrollScaling].BoxedValue;
