@@ -101,6 +101,7 @@ namespace BlueprintsX
             #endregion
 
             #region Save Panel
+
             //Create a copy of the save panel, which is the object that holds the LEV_SaveLoad
             blueprintSavePanel = GameObject.Instantiate(BPXManager.central.saveload.transform, BPXManager.central.saveload.transform.parent);
             blueprintSavePanel.gameObject.name = "Blueprint Save Panel";
@@ -267,19 +268,19 @@ namespace BlueprintsX
             previewContainer = previewButton;
 
             //Are you sure panel
-            areYouSurePanel = panel.GetChild(9).GetComponent<RectTransform>();
-            alreadyExistsText = areYouSurePanel.GetChild(1).GetComponent<TextMeshProUGUI>();
+            areYouSurePanel = panel.GetChild(10).GetComponent<RectTransform>();
+            alreadyExistsText = areYouSurePanel.GetChild(2).GetComponent<TextMeshProUGUI>();
 
-            LEV_CustomButton areYouSureSaveButton = areYouSurePanel.GetChild(2).GetComponent<LEV_CustomButton>();
+            LEV_CustomButton areYouSureSaveButton = areYouSurePanel.GetChild(3).GetComponent<LEV_CustomButton>();
             ReconfigureCustomButton(areYouSureSaveButton, OnPanelAreYouSureSave);
             allButtons.Add(areYouSureSaveButton);
 
-            LEV_CustomButton areYouSureCancelButton = areYouSurePanel.GetChild(3).GetComponent<LEV_CustomButton>();
+            LEV_CustomButton areYouSureCancelButton = areYouSurePanel.GetChild(4).GetComponent<LEV_CustomButton>();
             ReconfigureCustomButton(areYouSureCancelButton, OnPanelAreYouSureCancel);
             allButtons.Add(areYouSureCancelButton);
 
             //Text block inside panel
-            zeepfileTypeText = panel.GetChild(10).GetComponent<TextMeshProUGUI>();
+            zeepfileTypeText = panel.GetChild(9).GetComponent<TextMeshProUGUI>();
             //Move the text above the custom buttons.
             RectTransform zeepfileTypeTextRectTransform = zeepfileTypeText.GetComponent<RectTransform>();
             zeepfileTypeTextRectTransform.anchorMax = new Vector2(blueprintLevelSwitchButtonRectTransform.anchorMax.x, blueprintLevelSwitchButtonRectTransform.anchorMax.y + newButtonSize.y);

@@ -4,7 +4,7 @@
     <TargetFramework>net472</TargetFramework>
     <AssemblyName>BlueprintsX</AssemblyName>
     <Description>BlueprintsX</Description>
-    <Version>1.5.8</Version>
+    <Version>1.5.10</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
