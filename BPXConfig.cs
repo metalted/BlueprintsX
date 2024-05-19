@@ -29,6 +29,8 @@ namespace BlueprintsX
         public static bool enableForKeyScale = false;
         public static bool keyMove = true;
         public static bool enableForKeyMove = false;
+        public static bool keyRotate = true;
+        public static bool enableForKeyRotate = false;
         public static bool mmbDrag = true;
         public static bool enableForMMBDrag = false;
         public static bool keyDrag = true;
@@ -53,6 +55,11 @@ namespace BlueprintsX
         public static KeyCode moveRightKey = KeyCode.RightArrow;
         public static KeyCode moveUpKey = KeyCode.UpArrow;
         public static KeyCode moveDownKey = KeyCode.DownArrow;
+
+        public static KeyCode rotateYZNegKey = KeyCode.LeftArrow;
+        public static KeyCode rotateYZPosKey = KeyCode.RightArrow;
+        public static KeyCode rotateXNegKey = KeyCode.DownArrow;
+        public static KeyCode rotateXPosKey = KeyCode.UpArrow;
 
         public static KeyCode dragKey = KeyCode.LeftAlt;        
         public static KeyCode mirrorKey = KeyCode.F;
@@ -120,6 +127,8 @@ namespace BlueprintsX
         public static string control_enableForFastTravel = CreateConfigLabel(16, "Enable For Fast Travel");
         public static string control_saveShortcut = CreateConfigLabel(17, "Save Shortcut");
         public static string control_loadShortcut = CreateConfigLabel(18, "Load Shortcut");
+        public static string control_keyRotate = CreateConfigLabel(19, "Key Rotate");
+        public static string control_enableForKeyRotate = CreateConfigLabel(20, "Enable For Key Key Rotate");
 
         public static string keys_enable = CreateConfigLabel(1, "Enable");
         public static string keys_modifier = CreateConfigLabel(2, "Modifier");
@@ -138,6 +147,11 @@ namespace BlueprintsX
         public static string keys_fastTravel = CreateConfigLabel(15, "Fast Travel");
         public static string keys_save = CreateConfigLabel(16, "Save Shortcut: Enable + ");
         public static string keys_load = CreateConfigLabel(17, "Load Shortcut: Enable + ");
+
+        public static string keys_rotateXNeg = CreateConfigLabel(18, "Rotate X Neg");
+        public static string keys_rotateXPos = CreateConfigLabel(19, "Rotate X Pos");
+        public static string keys_rotateYZNeg = CreateConfigLabel(20, "Rotate Y Z Neg");
+        public static string keys_rotateYZPos = CreateConfigLabel(21, "Rotate Y Z Pos");
 
         public static string values_XZ = CreateConfigLabel(1, "XZ Values");
         public static string values_XZ_default_index = CreateConfigLabel(2, "Default XZ Index");
@@ -166,6 +180,8 @@ namespace BlueprintsX
             ConfigEntry<bool> cfg_enableForKeyScaling = config.Bind(controlSettingsTitle, control_enableForKeyScaling, enableForKeyScale, "");
             ConfigEntry<bool> cfg_keyMove = config.Bind(controlSettingsTitle, control_keyMove, keyMove, "");
             ConfigEntry<bool> cfg_enableForKeyMove = config.Bind(controlSettingsTitle, control_enableForKeyMove, enableForKeyMove, "");
+            ConfigEntry<bool> cfg_keyRotate = config.Bind(controlSettingsTitle, control_keyRotate, keyRotate, "");
+            ConfigEntry<bool> cfg_enableForKeyRotate = config.Bind(controlSettingsTitle, control_enableForKeyRotate, enableForKeyRotate, "");
             ConfigEntry<bool> cfg_mmbDrag = config.Bind(controlSettingsTitle, control_mmbDrag, mmbDrag, "");
             ConfigEntry<bool> cfg_enableForMMBDrag = config.Bind(controlSettingsTitle, control_enableForMMBDrag, enableForMMBDrag, "");
             ConfigEntry<bool> cfg_keyDrag = config.Bind(controlSettingsTitle, control_keyDrag, keyDrag, "");
@@ -188,6 +204,12 @@ namespace BlueprintsX
             ConfigEntry<KeyCode> cfg_moveRight = config.Bind(keysTitle, keys_moveRight, moveRightKey, "");
             ConfigEntry<KeyCode> cfg_moveUp = config.Bind(keysTitle, keys_moveUp, moveUpKey, "");
             ConfigEntry<KeyCode> cfg_moveDown = config.Bind(keysTitle, keys_moveDown, moveDownKey, "");
+
+            ConfigEntry<KeyCode> cfg_rotateXNeg = config.Bind(keysTitle, keys_rotateXNeg, rotateXNegKey, "");
+            ConfigEntry<KeyCode> cfg_rotateXPos = config.Bind(keysTitle, keys_rotateXPos, rotateXPosKey, "");
+            ConfigEntry<KeyCode> cfg_rotateYZNeg = config.Bind(keysTitle, keys_rotateYZNeg, rotateYZNegKey, "");
+            ConfigEntry<KeyCode> cfg_rotateYZPos = config.Bind(keysTitle, keys_rotateYZPos, rotateYZPosKey, "");
+
             ConfigEntry<KeyCode> cfg_drag = config.Bind(keysTitle, keys_drag, dragKey, "");
             ConfigEntry<KeyCode> cfg_mirror = config.Bind(keysTitle, keys_mirror, mirrorKey, "");
             ConfigEntry<KeyCode> cfg_copy = config.Bind(keysTitle, keys_copy, copyKey, "");
@@ -237,6 +259,10 @@ namespace BlueprintsX
                 enableForKeyScale = (bool)config[controlSettingsTitle, control_enableForKeyScaling].BoxedValue;
                 keyMove = (bool)config[controlSettingsTitle, control_keyMove].BoxedValue;
                 enableForKeyMove = (bool)config[controlSettingsTitle, control_enableForKeyMove].BoxedValue;
+                
+                keyRotate = (bool)config[controlSettingsTitle, control_keyRotate].BoxedValue;
+                enableForKeyRotate = (bool)config[controlSettingsTitle, control_enableForKeyRotate].BoxedValue;
+                
                 mmbDrag = (bool)config[controlSettingsTitle, control_mmbDrag].BoxedValue;
                 enableForMMBDrag = (bool)config[controlSettingsTitle, control_enableForMMBDrag].BoxedValue;
                 keyDrag = (bool)config[controlSettingsTitle, control_keyDrag].BoxedValue;
@@ -255,10 +281,17 @@ namespace BlueprintsX
                 modifierKey = (KeyCode)config[keysTitle, keys_modifier].BoxedValue;
                 positiveScaleKey = (KeyCode)config[keysTitle, keys_positiveScale].BoxedValue;
                 negativeScaleKey = (KeyCode)config[keysTitle, keys_negativeScale].BoxedValue;
+                
                 moveLeftKey = (KeyCode)config[keysTitle, keys_moveLeft].BoxedValue;
                 moveRightKey = (KeyCode)config[keysTitle, keys_moveRight].BoxedValue;
                 moveUpKey = (KeyCode)config[keysTitle, keys_moveUp].BoxedValue;
                 moveDownKey = (KeyCode)config[keysTitle, keys_moveDown].BoxedValue;
+
+                rotateXNegKey = (KeyCode)config[keysTitle, keys_rotateXNeg].BoxedValue;
+                rotateXPosKey = (KeyCode)config[keysTitle, keys_rotateXPos].BoxedValue;
+                rotateYZNegKey = (KeyCode)config[keysTitle, keys_rotateYZNeg].BoxedValue;
+                rotateYZPosKey = (KeyCode)config[keysTitle, keys_rotateYZPos].BoxedValue;
+                
                 dragKey = (KeyCode)config[keysTitle, keys_drag].BoxedValue;
                 mirrorKey = (KeyCode)config[keysTitle, keys_mirror].BoxedValue;
                 copyKey = (KeyCode)config[keysTitle, keys_copy].BoxedValue;

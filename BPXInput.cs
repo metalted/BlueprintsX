@@ -142,48 +142,111 @@ namespace BlueprintsX
                 //If we use the enable key for key movement, check if we can proceed.
                 if (BPXConfig.enableForKeyMove ? (enableKey ? true : false) : true)
                 {
-                    //If we are holding the modifier key, we are moving in the Y axis
-                    if (Input.GetKey(BPXConfig.modifierKey))
+                    //Is the "drag" button selected? Aka we are in movement mode:
+                    if (BPXManager.central.gizmos.dragButton.isSelected)
                     {
-                        //If the move up key is pressed.
-                        if (Input.GetKeyDown(BPXConfig.moveUpKey))
+                        //If we are holding the modifier key, we are moving in the Y axis
+                        if (Input.GetKey(BPXConfig.modifierKey))
                         {
-                            //Move the selection in the up direction, based on the value in the Y gizmo.
-                            MoveSelection(Vector3.up * BPXUI.GetGizmoValues().Y);
+                            //If the move up key is pressed.
+                            if (Input.GetKeyDown(BPXConfig.moveUpKey))
+                            {
+                                //Move the selection in the up direction, based on the value in the Y gizmo.
+                                MoveSelection(Vector3.up * BPXUI.GetGizmoValues().Y);
+                            }
+                            //If the move down key is pressed.
+                            else if (Input.GetKeyDown(BPXConfig.moveDownKey))
+                            {
+                                //Move the selection in the down direction, based on the value in the Y gizmo.
+                                MoveSelection(-Vector3.up * BPXUI.GetGizmoValues().Y);
+                            }
                         }
-                        //If the move down key is pressed.
-                        else if (Input.GetKeyDown(BPXConfig.moveDownKey))
+                        //If the modifier key is not held, we are moving in the XZ plane.
+                        else
                         {
-                            //Move the selection in the down direction, based on the value in the Y gizmo.
-                            MoveSelection(-Vector3.up * BPXUI.GetGizmoValues().Y);
+                            //If the move right key is pressed.
+                            if (Input.GetKeyDown(BPXConfig.moveRightKey))
+                            {
+                                //Move the selection in the right direction, based on the value in the XZ gizmo.
+                                MoveSelection(Vector3.right * BPXUI.GetGizmoValues().XZ);
+                            }
+                            //If the move left key is pressed.
+                            else if (Input.GetKeyDown(BPXConfig.moveLeftKey))
+                            {
+                                //Move the selection in the left direction, based on the value in the XZ gizmo.
+                                MoveSelection(-Vector3.right * BPXUI.GetGizmoValues().XZ);
+                            }
+                            //If the move up key is pressed.
+                            else if (Input.GetKeyDown(BPXConfig.moveUpKey))
+                            {
+                                //Move the selection in the forward direction, based on the value in the XZ gizmo.
+                                MoveSelection(Vector3.forward * BPXUI.GetGizmoValues().XZ);
+                            }
+                            //If the move down key is pressed.
+                            else if (Input.GetKeyDown(BPXConfig.moveDownKey))
+                            {
+                                //Move the selection in the backwards direction, based on the value in the XZ gizmo.
+                                MoveSelection(-Vector3.forward * BPXUI.GetGizmoValues().XZ);
+                            }
                         }
                     }
-                    //If the modifier key is not held, we are moving in the XZ plane.
-                    else
+                }
+            }
+            #endregion
+
+            #region Rotation
+            //Key Rotation
+            if (BPXConfig.keyRotate)
+            {
+                //If we use the enable key for key rotation, check if we can proceed.
+                if (BPXConfig.enableForKeyRotate ? (enableKey ? true : false) : true)
+                {
+                    //Is the rotate button selected? Aka we are in rotation mode:
+                    if (BPXManager.central.gizmos.rotateButton.isSelected)
                     {
-                        //If the move right key is pressed.
-                        if (Input.GetKeyDown(BPXConfig.moveRightKey))
+                        //If we are holding the modifier key, we are rotating in the Y axis
+                        if (Input.GetKey(BPXConfig.modifierKey))
                         {
-                            //Move the selection in the right direction, based on the value in the XZ gizmo.
-                            MoveSelection(Vector3.right * BPXUI.GetGizmoValues().XZ);
+                            //If the rotate Y Neg key is pressed.
+                            if (Input.GetKeyDown(BPXConfig.rotateYZNegKey))
+                            {
+                                //Rotate the selection in the Y axis, based on the value in the R gizmo.
+                                RotateSelection(BPXManager.central.gizmos.rotationGizmos.transform.up, BPXUI.GetGizmoValues().R);
+                            }
+                            //If the rotate Y Pos key is pressed.
+                            else if (Input.GetKeyDown(BPXConfig.rotateYZPosKey))
+                            {
+                                //Rotate the selection in the Y axis, based on the value in the R gizmo.
+                                RotateSelection(BPXManager.central.gizmos.rotationGizmos.transform.up, -BPXUI.GetGizmoValues().R);
+                            }
                         }
-                        //If the move left key is pressed.
-                        else if (Input.GetKeyDown(BPXConfig.moveLeftKey))
+                        //If the modifier key is not held, we are rotating the XZ axis.
+                        else
                         {
-                            //Move the selection in the left direction, based on the value in the XZ gizmo.
-                            MoveSelection(-Vector3.right * BPXUI.GetGizmoValues().XZ);
-                        }
-                        //If the move up key is pressed.
-                        else if (Input.GetKeyDown(BPXConfig.moveUpKey))
-                        {
-                            //Move the selection in the forward direction, based on the value in the XZ gizmo.
-                            MoveSelection(Vector3.forward * BPXUI.GetGizmoValues().XZ);
-                        }
-                        //If the move down key is pressed.
-                        else if (Input.GetKeyDown(BPXConfig.moveDownKey))
-                        {
-                            //Move the selection in the backwards direction, based on the value in the XZ gizmo.
-                            MoveSelection(-Vector3.forward * BPXUI.GetGizmoValues().XZ);
+                            //If the rotate X Neg key is pressed.
+                            if (Input.GetKeyDown(BPXConfig.rotateXNegKey))
+                            {
+                                //Rotate the selection in the Y axis, based on the value in the R gizmo.
+                                RotateSelection(BPXManager.central.gizmos.rotationGizmos.transform.right, -BPXUI.GetGizmoValues().R);
+                            }
+                            //If the rotate X Pos key is pressed.
+                            else if (Input.GetKeyDown(BPXConfig.rotateXPosKey))
+                            {
+                                //Rotate the selection in the Y axis, based on the value in the R gizmo.
+                                RotateSelection(BPXManager.central.gizmos.rotationGizmos.transform.right, BPXUI.GetGizmoValues().R);
+                            }
+                            //If the rotate Z Neg key is pressed
+                            else if (Input.GetKeyDown(BPXConfig.rotateYZNegKey))
+                            {
+                                //Rotate the selection in the Y axis, based on the value in the R gizmo.
+                                RotateSelection(BPXManager.central.gizmos.rotationGizmos.transform.forward, BPXUI.GetGizmoValues().R);
+                            }
+                            //If the rotate Z Pos key is pressed
+                            else if (Input.GetKeyDown(BPXConfig.rotateYZPosKey))
+                            {
+                                //Rotate the selection in the Y axis, based on the value in the R gizmo.
+                                RotateSelection(BPXManager.central.gizmos.rotationGizmos.transform.forward, -BPXUI.GetGizmoValues().R);
+                            }
                         }
                     }
                 }
@@ -608,6 +671,38 @@ namespace BlueprintsX
 
             // Break the lock and perform any necessary actions
             BPXManager.central.validation.BreakLock(BPXManager.central.undoRedo.ConvertBeforeAndAfterListToCollection(before, after, blockList, selectionList, selectionList), "Gizmo1");
+        }
+        #endregion
+
+        #region Rotation
+        public static void RotateSelection(Vector3 rotation, float angle)
+        {
+            // Check if BPXManager.central is null
+            if (BPXManager.central == null) { return; }
+
+            // Check if there are selected blocks
+            if (BPXManager.central.selection.list.Count > 0)
+            {
+                List<BlockProperties> blockList = BPXManager.central.selection.list;
+                // Convert the blockList to JSON before moving
+                List<string> before = BPXManager.central.undoRedo.ConvertBlockListToJSONList(blockList);
+
+                //Rotate the selected blocks
+                BPXManager.central.gizmos.DoRotate(rotation, angle);
+
+                // Update each blocks properties
+                foreach (BlockProperties bp in BPXManager.central.selection.list)
+                {
+                    bp.SomethingChanged();
+                }
+
+                // Convert the blockList to JSON after moving
+                List<string> after = BPXManager.central.undoRedo.ConvertBlockListToJSONList(blockList);
+                List<string> selectionList = BPXManager.central.undoRedo.ConvertSelectionToStringList(blockList);
+
+                // Break the lock and perform any necessary actions
+                BPXManager.central.validation.BreakLock(BPXManager.central.undoRedo.ConvertBeforeAndAfterListToCollection(before, after, blockList, selectionList, selectionList), "Gizmo11");
+            }
         }
         #endregion
 
